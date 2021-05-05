@@ -1,0 +1,26 @@
+<table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID_MEDICO</th>
+                <th scope="col">NOME</th>
+                <th scope="col">ID_ESPECIALIDADE</th>
+                <th scope="col">ACTIONS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($medicos as $medico) { ?>
+                <tr>
+                    <th scope="row"><?php echo $medico->getIdMedico() ?></th>
+                    <td><?php echo $medico->getNome() ?></td>
+                    <td><?php echo $medico->getIdEspecialidade() ?></td>
+                    <td>
+                        <span><a style="color:blue" href="#">view user</a></span>
+                        <span> | </span>
+                        <span><a style="color:orange" href="#">edit user</a></span>
+                        <span> | </span>
+                        <span><a style="color:red" href="#">delete user</a></span>
+                    </td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
