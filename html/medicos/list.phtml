@@ -1,26 +1,90 @@
+<button type="button" style="float: right; margin: 10px 0" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Inserir novo médico
+</button>
 <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">ID_MEDICO</th>
-                <th scope="col">NOME</th>
-                <th scope="col">ID_ESPECIALIDADE</th>
-                <th scope="col">ACTIONS</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($medicos as $medico) { ?>
-                <tr>
-                    <th scope="row"><?php echo $medico->getIdMedico() ?></th>
-                    <td><?php echo $medico->getNome() ?></td>
-                    <td><?php echo $medico->getIdEspecialidade() ?></td>
-                    <td>
-                        <span><a style="color:blue" href="#">view user</a></span>
-                        <span> | </span>
-                        <span><a style="color:orange" href="#">edit user</a></span>
-                        <span> | </span>
-                        <span><a style="color:red" href="#">delete user</a></span>
-                    </td>
-                </tr>
-            <?php } ?>
-        </tbody>
-    </table>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Morada</th>
+      <th scope="col">Telefone</th>
+      <th scope="col">Especialidade</th>
+      <th scope="col">Serviço</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php foreach ($medicos as $medico) { ?>
+      <tr>
+        <th scope="row"><?php echo $medico->getId() ?></th>
+        <td><?php echo $medico->getNome() ?></td>
+        <td><?php echo $medico->getMorada() ?></td>
+        <td><?php echo $medico->getTelefone() ?></td>
+        <td><?php echo $medico->getEspecialidade() ? $medico->getEspecialidade()->getDesignacao() : "" ?></td>
+        <td><?php echo $medico->getServico() ? $medico->getServico()->getDesignacao() : "" ?></td>
+        <td>
+          <span><a style="color:blue" href="medicos.php?view_user=<?php echo $medico->getId() ?>">view user</a></span>
+          <span> | </span>
+          <span><a style="color:orange" href="medicos.php?edit_user=<?php echo $medico->getId() ?>">edit user</a></span>
+          <span> | </span>
+          <span><a style="color:red" href="medicos.php?delete_id=<?php echo $medico->getId() ?>">delete user</a></span>
+        </td>
+      </tr>
+    <?php } ?>
+  </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Inserir novo médico</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="nome">Nome: </label>
+            <input type="text" name="nome" placeholder="O seu nome">
+          </div>
+          <div class="form-group">
+            <label for="morada">Morada</label>
+            <input type="text" name="morada" placeholder="O sua morada">
+          </div>
+          <div class="form-group">
+            <label for="telefone">Telefone</label>
+            <input type="text" name="telefone">
+          </div>
+          <div class="form-group">
+            <label for="especialidade">Especialidade</label>
+            <select name="especialidade" id="especialidade">
+              <?php foreach ($especialidades as $especialidade) { ?>
+                <option value="<?php echo $especialidade->getId() ?>"><?php echo $especialidade->getDesignacao() ?></option>
+              <?php } ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="servicos">Servicos</label>
+            <select name="servico" id="servicos">
+              <?php foreach ($servicos as $servico) { ?>
+                <option value="<?php echo $servico->getId() ?>"><?php echo $servico->getDesignacao() ?></option>
+              <?php } ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="foto">Foto de perfil</label>
+            <input type="file" name="foto">
+          </div>
+        </div>
+        <input type="hidden" name="medico_id" value="<?php $medico->getId() ?>">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">fechar</button>
+          <button type="submit" class="btn btn-primary">criar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

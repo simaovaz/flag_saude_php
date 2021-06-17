@@ -1,0 +1,50 @@
+<button type="button" style="float: right; margin: 10px 0" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Inserir nova especialidade
+</button>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID_ESPECIALIDADE</th>
+      <th scope="col">DESIGNAÇÃO</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php foreach ($especialidades as $especialidade) { ?>
+      <tr>
+        <th scope="row"><?php echo $especialidade->getId() ?></th>
+        <td><?php echo $especialidade->getDesignacao() ?></td>
+        <td>
+          <span><a style="color:blue" href="especialidades.php?view_especialidade=<?php echo $especialidade->getId() ?>"> ver especialidade</a></span>
+          <span> | </span>
+          <span><a style="color:orange" href="especialidades.php?edit_especialidade=<?php echo $especialidade->getId() ?>">edit especialidade</a></span>
+          <span> | </span>
+          <span><a style="color:red" href="especialidades.php?delete_especialidade=<?php echo $especialidade->getId() ?>">delete especialidade</a></span>
+        </td>
+      </tr>
+    <?php } ?>
+  </tbody>
+</table>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Inserir nova especialidade</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <div class="modal-body">
+          <label for="designação">Designação </label>
+          <input type="text" name="designacao" placeholder="designação">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">fechar</button>
+          <button type="submit" class="btn btn-primary">criar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

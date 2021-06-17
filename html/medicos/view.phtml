@@ -1,0 +1,5 @@
+<h1>Dr. <?php echo $medico->getNome() ?></h1>
+<h3>Especialidade: <?php echo $medico->getEspecialidade() ? $medico->getEspecialidade()->getDesignacao() : "Não tem" ; ?></h3>
+<h3>Servico: <?php echo $medico->getServico() ? $medico->getServico()->getDesignacao() : "Não tem" ; ?></h3>
+<h4>Morada: <?php echo $medico->getMorada(); ?></h4>
+<img style="max-width: 300px;max-height: 200px;width: auto;height: auto;" src="http://localhost/flag_saude/flag_saude_php/images/<?php echo $medico->getFoto() ?? "default.png" ?>" />

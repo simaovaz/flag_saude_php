@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="nome">Especialidade ID: </label>
+                <input type="text" name="especialidade_id" placeholder="O seu nome" value="<?php echo $especialidade->getID() ?>">
+            </div>
+            <div class="form-group">
+                <label for="morada">Designação </label>
+                <input type="text" name="designacao" placeholder="O sua morada" value="<?php echo $especialidade->getDesignacao() ?>">
+            </div>
+         
+        </div>
+        <input type="hidden" name="id_medico" value="<?php echo $especialidade->getID() ?>">
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">fechar</button>
+            <button type="submit" class="btn btn-primary">Editar</button>
+        </div>
+    </form>
+</body>
+
+</html>

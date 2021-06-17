@@ -1,77 +1,99 @@
 <?php
 
+require_once 'Especialidade.php';
 
-class Medico {
+class Medico
+{
+    const TABLE_NAME = "medicos";
+    const ID_FIELD = "id_medico";
 
+    //propriedade de class
+    public static $n_medicos = 0;
 
-    private $nome;
+    //propriedades de instancia
     private $id_medico;
-    private $id_servico;
-    private $id_especialidade;
+    private $nome;
     private $morada;
     private $telefone;
+    private $servico;
+    private $especialidade;
+    private $foto;
 
-    public function __construct(string $nome,int $id_medico, int $id_especialidade, int $id_servico, string $morada, string $telefone){
-        $this->nome =$nome;
-        $this->id_medico= $id_medico;
-        $this->id_especialidade= $id_especialidade;
-        $this->id_servico= $id_servico;
-        $this->morada= $morada;
-        $this->telefone= $telefone;
-    }
-   
-
-    public function getNome (){
-        return $this-> nome;
-    }
-    public function getIdMedico (){
-        return $this-> id_medico;
-    }
-    public function getIdEspecialidade (){
-        return $this-> id_especialidade;
-    }
-    public function getMorada (){
-        return $this-> morada;
-    }
-    public function getTelefone (){
-        return $this-> telefone;
-    }
-    public function getIdServico (){
-        return $this-> id_servico;
-    }
-
-    public function setNome(string $nome) : void 
+    public function __construct(array $attributes)
     {
-        if(strlen($nome)>2){
-            $this->nome= $nome;
+        if(!$attributes['nome'] || !$attributes['morada']){
+            echo "Aprender a criar uma exception para impedior a criação";
         }
-        
-    }
-    public function setIdServico(int $novo_id_servico) :void
-    {
-        $this->id_servico= $novo_id_servico;
+
+        $this->id_medico = $attributes['id_medico'] ?? null;
+        $this->setNome($attributes['nome']);
+        $this->morada = $attributes['morada'] ?? null;
+        $this->telefone = $attributes['telefone'] ?? null;
+        $this->servico = $attributes['servico'] ?? null;
+        $this->especialidade = $attributes['especialidade'] ?? null;
+        $this->foto = $attributes['foto'] ?? null;
+        self::$n_medicos++;
     }
 
-    public function setIdEspecialidade(int $novo_id_especialidade) :void
-    {
-        $this->id_servico= $novo_id_especialidade;
+    //metodo de instancia
+    public function getNome(){
+        return $this->nome;
     }
 
-    public function setTelefone(int $novo_telefone) :void
-    {
-        $this->id_servico= $novo_telefone;
+    //metodo de instancia
+    public function getMorada(){
+        return $this->morada;
+    }
+
+    //metodo de instancia
+    public function getTelefone(){
+        return $this->telefone;
+    }
+
+    public function getId(){
+        return $this->id_medico;
+    }
+
+    public function getEspecialidade() {
+        return $this->especialidade;
+    }
+
+    public function getServico(){
+        return $this->servico;
+    }
+
+    public function getFoto(){
+        return $this->foto;
     }
     
-    public function setMorada(int $novo_morada) :void
+    //metodo de instancia
+    public function setNome(string $nome): void
     {
-        $this->id_servico= $novo_morada;
+        if(strlen($nome) >= 2){
+            $this->nome = $nome;
+        }
+    }
+
+    //metodo de class
+    public static function getNMedicos(){
+        return self::$n_medicos;
+    }
+
+    public function toArray(){
+        $attributes = get_object_vars($this);
+        $attributes["especialidade_id"] =  $attributes["especialidade"] instanceof Especialidade ? $this->especialidade->getId() : $attributes["especialidade"];
+        $attributes["servico_id"] =  $attributes["servico"] instanceof Servico ? $this->servico->getId() : $attributes["servico"];
+        return $attributes;
+    }
+
+    public function setEspecialidade(Especialidade $especialidade): void
+    {
+        $this->especialidade = $especialidade;
+    }
+
+    public function setServico(Servico $servico): void
+    {
+        $this->servico = $servico;
     }
 
 }
-
-//$Jose= new Medico("Jose Antonio", 4,3, 2, "Rua da Alegria", "912863752");
-
-//var_dump($Jose-> getNome());
-
-
-?>
